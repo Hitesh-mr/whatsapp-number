@@ -1,16 +1,20 @@
 import pywhatkit as kit
 import datetime
-import time
 
 def send_whatsapp_message(phone_number, message, hour, minute):
-    # Check if the time is in the future
     now = datetime.datetime.now()
+    
+    # Ensure the time is in the future
     if (hour < now.hour) or (hour == now.hour and minute <= now.minute):
         print("The specified time is in the past. Please set a future time.")
         return
+    
+    try:
+        # Schedule the message
+        kit.sendwhatmsg(phone_number, message, hour, minute)
+        print("Message scheduled successfully!")
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
-    # Schedule the message to be sent
-    kit.sendwhatmsg(phone_number, message, hour, minute)
-
-# Example usage
-send_whatsapp_message("write your number", "Hello from Python!!", 11, 53)
+# Example usage (make sure to replace with a valid phone number)
+send_whatsapp_message("+1234567890", "Hello from Python!!", 11, 55)
